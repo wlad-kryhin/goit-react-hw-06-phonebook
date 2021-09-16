@@ -1,8 +1,10 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import s from "./ContactForm.module.css";
+import action from "../../redux/action";
 
-export default function ContactForm({ submit }) {
+function ContactForm({ submit }) {
   const [name, setName] = useState("");
   const [tel, setTel] = useState("");
 
@@ -57,5 +59,10 @@ export default function ContactForm({ submit }) {
 }
 
 ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  submit: ({ name, tel }) => dispatch(action.addItem({ name, tel })),
+});
+export default connect(null, mapDispatchToProps)(ContactForm);
